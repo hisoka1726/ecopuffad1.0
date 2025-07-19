@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Eco Puff Animated Ad</title>
+<style>
+  body {
+    margin: 0;
+    background: #f9f9f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    color: #333;
+  }
+  .container {
+    position: relative;
+    width: 360px;
+    height: 640px;
+    margin: 20px auto;
+    border-radius: 20px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  }
+  .scene {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    text-align: center;
+  }
+  .scene.active {
+    opacity: 1;
+  }
+  .scene img {
+    max-width: 100%;
+    max-height: 250px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+  }
+  h1 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+  }
+  p {
+    font-size: 1.1em;
+    margin-top: 0;
+    color: #555;
+  }
+  audio {
+    display: none;
+  }
+</style>
+</head>
+<body>
+<div class="container" aria-label="Eco Puff Advertisement">
+
+  <!-- Scenes -->
+  <div class="scene active" id="scene1">
+    <h1>Tired of old habits?</h1>
+    <img src="https://i.imgur.com/W2D6f1k.jpg" alt="Ashtray with cigarette" />
+    <p>Time for a fresh start.</p>
+  </div>
+
+  <div class="scene" id="scene2">
+    <h1>Meet Eco Puff</h1>
+    <img src="https://i.imgur.com/mk4F6Xb.jpg" alt="Eco Puff light inhaler" />
+    <p>Natural, nicotine-free inhaler.</p>
+  </div>
+
+  <div class="scene" id="scene3">
+    <h1>No Nicotine & No Chemicals</h1>
+    <img src="https://i.imgur.com/j5O2PP5.jpg" alt="Icons showing no nicotine, no chemicals" />
+    <p>Just clean, fresh breathing.</p>
+  </div>
+
+  <div class="scene" id="scene4">
+    <h1>Flavors You Love</h1>
+    <img src="https://i.imgur.com/o05DjHw.jpg" alt="Eco Puff flavor packs" />
+    <p>Lemon, Strawberry, Mint, Blueberry</p>
+  </div>
+
+  <div class="scene" id="scene5">
+    <h1>Reusable & Sustainable</h1>
+    <img src="https://i.imgur.com/QQEJYMY.jpg" alt="Habit tracker and cleaning kit" />
+    <p>Supports your journey to quit.</p>
+  </div>
+
+  <div class="scene" id="scene6">
+    <h1>Real People. Real Change.</h1>
+    <p>“Eco Puff helped me quit. I feel fresh and free.”</p>
+  </div>
+
+  <div class="scene" id="scene7">
+    <h1>Eco Puff — Breathe Better</h1>
+    <p>Visit eco-puff.com</p>
+  </div>
+
+</div>
+
+<!-- Audio Elements -->
+<audio id="voiceover" src="https://cdn.jsdelivr.net/gh/chatgpt-samples/audio/eco-puff-voiceover.mp3"></audio>
+<audio id="background-music" src="https://cdn.jsdelivr.net/gh/chatgpt-samples/audio/ambient-background.mp3" loop></audio>
+
+<script>
+  const scenes = document.querySelectorAll('.scene');
+  const voiceover = document.getElementById('voiceover');
+  const bgMusic = document.getElementById('background-music');
+
+  const sceneTexts = [
+    "Tired of old habits weighing you down?",
+    "Meet Eco Puff — your natural, nicotine-free inhaler.",
+    "No smoke. No chemicals. Just clean breathing.",
+    "Choose your mood: Lemon, Strawberry, Mint, or Blueberry.",
+    "Reusable, sustainable, with habit tracking.",
+    "Eco Puff helped me quit. I feel fresh and free.",
+    "Eco Puff. Breathe better."
+  ];
+
+  let current = 0;
+
+  function showScene(index) {
+    scenes.forEach((scene, i) => {
+      scene.classList.toggle('active', i === index);
+    });
+  }
+
+  // On voiceover time update, change scenes approx every 4.5 seconds
+  function playVoiceoverScenes() {
+    showScene(current);
+    current++;
+    if(current < scenes.length){
+      setTimeout(playVoiceoverScenes, 4500);
+    }
+  }
+
+  // Start audio and animation on user interaction (required by browsers)
+  function startAd() {
+    document.body.removeEventListener('click', startAd);
+    bgMusic.volume = 0.15;
+    bgMusic.play();
+    voiceover.play();
+    playVoiceoverScenes();
+  }
+
+  document.body.addEventListener('click', startAd);
+
+  // Accessibility: add instructions
+  const instruction = document.createElement('p');
+  instruction.textContent = "Click anywhere to start the Eco Puff ad";
+  instruction.style.textAlign = 'center';
+  instruction.style.fontSize = '1em';
+  instruction.style.color = '#777';
+  instruction.style.marginTop = '10px';
+  document.body.appendChild(instruction);
+</script>
+
+</body>
+</html>
